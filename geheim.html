@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Web Solutions</title>
+    <style>
+        /* Reset und Basisstile */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6c63ff;
+            --secondary: #ff6584;
+            --dark: #2a2a72;
+            --light: #f8f9fa;
+            --text: #333;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Header und Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+        
+        .header-scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo svg {
+            margin-right: 0.5rem;
+            animation: spin 8s linear infinite;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-btn {
+            display: none;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: var(--dark);
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #5a52e0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 700px;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Features Section */
+        .section {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .feature-icon svg {
+            width: 2rem;
+            height: 2rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon svg {
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        /* Portfolio Section */
+        .portfolio {
+            background: linear-gradient(135deg, #2a2a72 0%, #1a1a52 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,100 100,0 100,100" fill="rgba(255,255,255,0.03)"/></svg>');
+            background-size: cover;
+        }
+        
+        .section-title.light h2 {
+            color: white;
+        }
+        
+        .section-title.light p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-img {
+            height: 250px;
+            background: linear-gradient(45deg, #6c63ff, #ff6584);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(42, 42, 114, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-content p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .project-tag {
+            background: rgba(108, 99, 255, 0.2);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            position: relative;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin: 0 1rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        .testimonial.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+        }
+        
+        .testimonial-content {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #555;
+            position: relative;
+        }
+        
+        .testimonial-content::before,
+        .testimonial-content::after {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(108, 99, 255, 0.2);
+            position: absolute;
+        }
+        
+        .testimonial-content::before {
+            top: -20px;
+            left: -20px;
+        }
+        
+        .testimonial-content::after {
+            bottom: -40px;
+            right: -20px;
+        }
+        
+        .client {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .client-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .client-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .client-info p {
+            color: #777;
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .testimonial-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: white;
+            position: relative;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .contact-icon svg {
+            width: 1.2em;
+            height: 1.2em;
+            color: var(--primary);
+        }
+        
+        .contact-text h4 {
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .contact-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            position: relative;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(-50%) translateX(0);
+            }
+            50% {
+                transform: translateY(-50%) translateX(-10px);
+            }
+            100% {
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero {
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 70%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .nav-btn {
+                display: inline-block;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.2);
+            animation: floatParticle linear infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">
+                    <!-- Icon ersetzt durch SVG -->
+                    <span style="display:inline-block;width:1.2em;height:1.2em;vertical-align:middle;">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 12c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5-4.5-2.015-4.5-4.5zm-2 0c0 3.584 2.916 6.5 6.5 6.5s6.5-2.916 6.5-6.5-2.916-6.5-6.5-6.5-6.5 2.916-6.5 6.5z"/></svg>
+                    </span>
+                    Infinity
+                </a>
+                
+                <ul class="nav-links" id="navLinks" style="align-items: center;">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    
+                    <!-- Platzhalter für die E-Mail des angemeldeten Benutzers -->
+                    <li id="user-email-nav" style="font-weight: bold; color: #6c63ff; padding: 0.5rem 0;">
+                        <!-- Dieser Text wird von JavaScript ersetzt -->
+                    </li>
+
+                    <!-- Der Abmelde-Button -->
+                    <li>
+                        <a href="#" id="logout-button" style="color: #ff6584;">Abmelden</a>
+                    </li>
+                </ul>
+                
+                <a href="#contact" class="btn btn-primary nav-btn">Get Started</a>
+                <button class="mobile-menu-btn" id="menuBtn">
+                    <!-- Icon ersetzt durch SVG -->
+                    <span id="menuIcon">
+                        <svg viewBox="0 0 24 24" width="1.5em" height="1.5em" fill="currentColor"><rect y="4" width="24" height="2"/><rect y="11" width="24" height="2"/><rect y="18" width="24" height="2"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="particles" id="particles"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1>Erschaffe <span>beeindruckende</span> digitale Erlebnisse</h1>
+                <p>Wir helfen Unternehmen dabei, innovative digitale Lösungen zu entwickeln, die ihre Kunden begeistern und ihr Geschäft voranbringen.</p>
+                <div class="hero-btns">
+                    <a href="#portfolio" class="btn btn-primary">Unsere Projekte</a>
+                    <a href="#contact" class="btn btn-secondary">Kontakt aufnehmen</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#6c63ff" d="M37.2,-64.4C48.4,-58.9,58.1,-49.5,67.4,-37.9C76.7,-26.3,85.6,-12.5,86.2,1.6C86.8,15.7,79.2,31.4,70.3,45.7C61.4,59.9,51.3,72.7,38.4,77.4C25.5,82.2,9.8,78.8,-5.3,75.2C-20.4,71.5,-34.8,67.6,-47.1,60.2C-59.4,52.8,-69.6,41.9,-75.6,28.7C-81.6,15.5,-83.5,0.1,-80.7,-13.5C-77.8,-27.1,-70.3,-39,-60.3,-49.9C-50.4,-60.8,-38,-70.8,-24.8,-75.2C-11.6,-79.6,2.4,-78.4,16.3,-75.6C30.2,-72.7,43.9,-68.3,53.1,-60.1C62.3,-52,67,-40.2,70.9,-28.3C74.8,-16.4,77.9,-4.5,78.8,8.5C79.7,21.5,78.5,35.5,73.1,47.3C67.7,59.1,58.1,68.8,46.7,76.5C35.3,84.3,22.2,90.1,8.1,89.6C-6.1,89.1,-20.2,82.2,-32.8,75.1C-45.4,67.9,-56.5,60.5,-65.3,50.6C-74.1,40.7,-80.7,28.3,-84.5,14.8C-88.3,1.3,-89.3,-13.2,-85.8,-26.4C-82.3,-39.5,-74.3,-51.3,-64.1,-61.6C-53.9,-71.9,-41.6,-80.7,-28.8,-85.1C-15.9,-89.4,-2.7,-89.3,10.3,-86.5C23.3,-83.7,36.1,-78.1,47.1,-70.3C58.1,-62.5,67.3,-52.5,74.8,-41.2C82.3,-29.9,88.2,-17.3,90.2,-4.1C92.3,9.1,90.6,22.9,85.5,35.2C80.4,47.5,71.9,58.4,61.6,67.5C51.3,76.6,39.2,83.9,26.3,87.6C13.4,91.3,-0.3,91.5,-13.5,89.2C-26.7,86.8,-39.4,81.9,-50.5,74.8C-61.6,67.7,-71.1,58.5,-78.7,48C-86.3,37.5,-92.1,25.8,-94.4,13.3C-96.7,0.9,-95.6,-12.3,-91.5,-24.8C-87.4,-37.3,-80.4,-49.1,-70.8,-59.1C-61.3,-69.1,-49.2,-77.3,-36.2,-81.6C-23.2,-85.9,-9.4,-86.3,3.9,-84.5C17.1,-82.7,26,-69.9,37.2,-64.4Z" transform="translate(250 250)" />
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section features-section" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Unsere Dienstleistungen</h2>
+                <p>Wir bieten ein umfassendes Leistungsspektrum, um Ihre digitale Präsenz zu stärken und Ihr Geschäft voranzutreiben.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Laptop Code SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="18" height="12" rx="2"/><rect x="1" y="19" width="22" height="2" rx="1"/></svg>
+                    </div>
+                    <h3>Web Entwicklung</h3>
+                    <p>Moderne, responsive Websites und Webanwendungen, die auf Ihre Bedürfnisse zugeschnitten sind und Ihre Nutzer begeistern.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Mobile Alt SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="2" width="10" height="20" rx="2"/><circle cx="12" cy="18" r="1"/></svg>
+                    </div>
+                    <h3>Mobile Apps</h3>
+                    <p>Native und hybride App-Entwicklung für iOS und Android, die Ihre Nutzer auf allen Geräten erreicht.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Paint Brush SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><path d="M7 16c0 2.21 1.79 4 4 4s4-1.79 4-4H7zm9.71-9.29a1 1 0 0 0-1.42 0l-8 8A1 1 0 0 0 7 16h10a1 1 0 0 0 .71-1.71l-8-8z"/></svg>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Intuitive und ansprechende Benutzeroberflächen, die das Nutzererlebnis verbessern und die Conversion steigern.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Chart Line SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><polyline points="4 14 8 10 12 14 16 10 20 14" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Digital Marketing</h3>
+                    <p>Strategische Marketinglösungen, die Ihre Sichtbarkeit erhöhen und qualifizierte Leads generieren.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Cloud SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 19a4.5 4.5 0 0 0 0-9c-.74 0-1.44.16-2.07.44A5.5 5.5 0 1 0 6.5 19h11z"/></svg>
+                    </div>
+                    <h3>Cloud Lösungen</h3>
+                    <p>Skalierbare Cloud-Infrastrukturen und Services, die Ihr Business flexibel und effizient machen.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <!-- Shield Alt SVG -->
+                        <svg width="2em" height="2em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l7 4v6c0 5.25-3.75 10-7 10s-7-4.75-7-10V6l7-4z"/></svg>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Umfassender Schutz Ihrer digitalen Assets und Daten vor modernen Cyber-Bedrohungen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Section -->
+    <section class="section portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title light">
+                <h2>Unsere Projekte</h2>
+                <p>Entdecken Sie eine Auswahl unserer erfolgreich umgesetzten Projekte und sehen Sie selbst, was wir erreichen können.</p>
+            </div>
+            
+            <div class="projects">
+                <div class="project-card">
+                    <div class="project-img">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Projekt ansehen</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>E-Commerce Plattform</h3>
+                        <p>Eine maßgeschneiderte E-Commerce-Lösung mit personalisierter Customer Journey.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Entwicklung</span>
+                            <span class="project-tag">UI/UX Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Projekt ansehen</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Fitness App</h3>
+                        <p>Mobile App für personalisiertes Training und Ernährungsplanung.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Mobile App</span>
+                            <span class="project-tag">Cloud</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-img">
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Projekt ansehen</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Unternehmensdashboard</h3>
+                        <p>Analytik-Dashboard zur Visualisierung von Geschäftskennzahlen in Echtzeit.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Entwicklung</span>
+                            <span class="project-tag">Data Visualization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Was unsere Kunden sagen</h2>
+                <p>Erfahren Sie aus erster Hand, wie unsere Dienstleistungen Unternehmen dabei geholfen haben, ihre Ziele zu erreichen.</p>
+            </div>
+            
+            <div class="testimonial-container">
+                <div class="testimonial active">
+                    <div class="testimonial-content">
+                        Die Zusammenarbeit mit dem Team von Infinity hat unsere Erwartungen übertroffen. Die neue Website hat nicht nur unsere Conversion-Rate verdoppelt, sondern auch unsere Markenwahrnehmung deutlich verbessert.
+                    </div>
+                    <div class="client">
+                        <div class="client-img">MJ</div>
+                        <div class="client-info">
+                            <h4>Maximilian Jäger</h4>
+                            <p>CEO, TechSolutions GmbH</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        Die entwickelte Mobile App hat unsere Kundenbindung signifikant erhöht. Das Team war jederzeit ansprechbar und hat flexibel auf unsere Anforderungen reagiert.
+                    </div>
+                    <div class="client">
+                        <div class="client-img">SK</div>
+                        <div class="client-info">
+                            <h4>Sabine Keller</h4>
+                            <p>Marketing Director, FitLife AG</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        Die Cloud-Migration war ein voller Erfolg. Unsere Betriebskosten sind um 40% gesunken, während die Systemleistung und Skalierbarkeit deutlich gestiegen sind.
+                    </div>
+                    <div class="client">
+                        <div class="client-img">TW</div>
+                        <div class="client-info">
+                            <h4>Thomas Weber</h4>
+                            <p>CTO, Global Logistics Inc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-controls">
+                <div class="testimonial-dot active" data-index="0"></div>
+                <div class="testimonial-dot" data-index="1"></div>
+                <div class="testimonial-dot" data-index="2"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kontaktieren Sie uns</h2>
+                <p>Haben Sie Fragen oder möchten Sie ein Projekt besprechen? Wir freuen uns auf Ihre Nachricht!</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <!-- Map Marker SVG -->
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Unsere Adresse</h4>
+                            <p>Innovationsstraße 42, 10115 Berlin</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <!-- Phone SVG -->
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.35.27 2.67.76 3.88a1 1 0 0 1-.21 1.11l-2.2 2.2z"/></svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Telefon</h4>
+                            <p>+49 (0)30 12345678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <!-- Envelope SVG -->
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 20v-9.99l8 6.99 8-6.99V20H4z"/></svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Email</h4>
+                            <p>info@infinity-solutions.de</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <!-- Clock SVG -->
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Öffnungszeiten</h4>
+                            <p>Montag - Freitag: 9:00 - 18:00 Uhr</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Betreff</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Infinity Solutions</h3>
+                    <p>Wir entwickeln innovative digitale Lösungen, die Unternehmen helfen, ihre Ziele zu erreichen und ihre Kunden zu begeistern.</p>
+                    <div class="social-links">
+                        <!-- Social Icons als SVGs -->
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99h-2.54v-2.89h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 17 22 12z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.3 4.3 0 0 0 1.88-2.38 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.7c-.37.64-.58 1.39-.58 2.18 0 1.5.76 2.82 1.92 3.6-.71-.02-1.38-.22-1.97-.54v.05c0 2.1 1.5 3.85 3.5 4.25-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08.54 1.7 2.12 2.94 3.99 2.97A8.6 8.6 0 0 1 2 19.54c-.65 0-1.29-.04-1.92-.11A12.13 12.13 0 0 0 8.29 21c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.54A8.18 8.18 0 0 0 22.46 6z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zm10.25 1.75a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="4" height="15"/><circle cx="4" cy="4" r="2"/><rect x="8" y="7" width="4" height="15"/><path d="M16 7h4v2.5c.6-.9 1.7-2.5 4-2.5 3.3 0 4 2.2 4 5.2V22h-4v-7c0-1.7-.6-2.8-2-2.8s-2 1.1-2 2.8V22h-4V7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Dienstleistungen</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Dienstleistungen</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Web Entwicklung</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Cloud Lösungen</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Abonnieren Sie unseren Newsletter für Updates und Angebote.</p>
+                    <form class="footer-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Ihre Email Adresse" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Abonnieren</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Infinity Solutions. Alle Rechte vorbehalten.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const menuIcon = document.getElementById('menuIcon');
+            if (navLinks.classList.contains('active')) {
+                menuIcon.innerHTML = `<svg viewBox="0 0 24 24" width="1.5em" height="1.5em" fill="currentColor"><line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2"/><line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" stroke-width="2"/></svg>`;
+            } else {
+                menuIcon.innerHTML = `<svg viewBox="0 0 24 24" width="1.5em" height="1.5em" fill="currentColor"><rect y="4" width="24" height="2"/><rect y="11" width="24" height="2"/><rect y="18" width="24" height="2"/></svg>`;
+            }
+        });
+        
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                    }
+                }
+            });
+        });
+        
+        // Testimonial Slider
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        testimonialDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const index = dot.getAttribute('data-index');
+                
+                // Remove active classes
+                testimonialDots.forEach(d => d.classList.remove('active'));
+                testimonials.forEach(t => t.classList.remove('active'));
+                
+                // Add active classes
+                dot.classList.add('active');
+                testimonials[index].classList.add('active');
+            });
+        });
+        
+        // Auto testimonial slider
+        let currentTestimonial = 0;
+        
+        function rotateTestimonials() {
+            testimonialDots.forEach(d => d.classList.remove('active'));
+            testimonials.forEach(t => t.classList.remove('active'));
+            
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            
+            testimonialDots[currentTestimonial].classList.add('active');
+            testimonials[currentTestimonial].classList.add('active');
+        }
+        
+        setInterval(rotateTestimonials, 5000);
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Here you would normally send the form data to a server
+            alert('Vielen Dank für Ihre Nachricht! Wir werden uns in Kürze bei Ihnen melden.');
+            contactForm.reset();
+        });
+        
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Random properties
+            const size = Math.random() * 10 + 2;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const animationDuration = Math.random() * 20 + 10;
+            const animationDelay = Math.random() * 5;
+            const opacity = Math.random() * 0.5 + 0.1;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${posX}%`;
+            particle.style.top = `${posY}%`;
+            particle.style.opacity = opacity;
+            particle.style.animationDuration = `${animationDuration}s`;
+            particle.style.animationDelay = `${animationDelay}s`;
+            
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Floating animation for hero elements
+        const heroElements = document.querySelectorAll('.hero-content, .hero-image');
+        
+        heroElements.forEach((el, index) => {
+            el.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

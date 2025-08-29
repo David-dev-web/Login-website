@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Willkommen!</h1>
+        <p>Bitte melde dich an oder registriere dich, um die geheime Seite zu sehen.</p>
+
+        <!-- Login Formular -->
+        <div id="login-form">
+            <h2>Anmelden</h2>
+            <input type="email" id="login-email" placeholder="E-Mail" required>
+            <input type="password" id="login-password" placeholder="Passwort" required>
+            <button id="login-button">Anmelden</button>
+        </div>
+
+        <!-- Registrierungs-Formular -->
+        <div id="register-form">
+            <h2>Registrieren</h2>
+            <input type="email" id="register-email" placeholder="E-Mail" required>
+            <input type="password" id="register-password" placeholder="Passwort" required>
+            <button id="register-button">Registrieren</button>
+        </div>
+        
+        <p id="error-message" class="error"></p>
+    </div>
+
+    <!-- Wir fügen unser JavaScript später hier ein -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
