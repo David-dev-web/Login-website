@@ -33,7 +33,7 @@ const auth = getAuth(app);
 
 // Initialisiere App Check mit deinem reCAPTCHA v3 Websiteschlüssel
 const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider('6LcojrcrAAAAAKycuW7P_8KcCWihCeS5fRgV2UVZM'),
+  provider: new ReCaptchaV3Provider('6LfYkrcrAAAAACXrGzSvpC3JJeFm8DYplaTwBlk2'),
   isTokenAutoRefreshEnabled: true
 });
 
@@ -136,3 +136,4 @@ function getFriendlyErrorMessage(errorCode) {
         default: return 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.';
     }
 }
+
